@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Képzéseink - Firestarter Akadémia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --dark: #2D3436;
+            --light: #F7F7F7;
+            --gradient: linear-gradient(135deg, #FF6B6B, #FFA07A);
+            
+
+            --bg-color: #F7F7F7;
+            --text-color: #2D3436;
+            --card-bg: white;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --testimonial-bg: rgba(255, 255, 255, 0.05);
+            --nav-link-color: #2D3436;
+            --card-shadow: rgba(0, 0, 0, 0.1);
+            --testimonials-bg: #2D3436;
+            --hero-bg: linear-gradient(135deg, #F6F6F6 0%, #FFFFFF 100%);
+            --footer-bg: #F7F7F7;
+            --footer-text: #2D3436;
+        }
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --card-bg: #2d2d2d;
+            --header-bg: rgba(45, 45, 45, 0.95);
+            --testimonial-bg: rgba(255, 255, 255, 0.1);
+            --nav-link-color: #ffffff;
+            --card-shadow: rgba(0, 0, 0, 0.3);
+            --testimonials-bg: #000000;
+            --hero-bg: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            --footer-bg: #2d2d2d;
+            --footer-text: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+        }
+        .theme-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--gradient);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+
+        .theme-switch:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background 0.3s ease;
+        }
+
+        header.scrolled {
+            background: var(--header-bg);
+            box-shadow: 0 2px 20px var(--card-shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--nav-link-color);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .content-container {
+            max-width: 1200px;
+            margin: 6rem auto 0;
+            padding: 2rem 5%;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .program-description {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            color: var(--text-color);
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .training-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px var(--card-shadow);
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .training-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+        }
+
+        .training-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px var(--card-shadow);
+        }
+
+        .training-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .training-info {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .training-info strong {
+            color: var(--secondary);
+        }
+
+        .home-button {
+            background: var(--gradient);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 1000;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 5rem 5%;
+            background: var(--hero-bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            opacity: 0.1;
+            border-radius: 50%;
+            transform: scale(1.5);
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+        }
+
+        .pulse {
+            animation: pulse 2s 3;
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .program-description {
+                font-size: 1.1rem;
+            }
+
+            .training-title {
+                font-size: 1.5rem;
+            }
+
+
+            .home-button {
+                bottom: 10px;
+                right: 10px;
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">Firestarter Akadémia</div>
+            <nav>
+                <a href="../">Kezdőlap</a>
+                <button class="theme-switch" onclick="toggleTheme()">
+                    <span class="mode-text">☀️</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" data-aos="fade-up">
+        <h1 class="section-title">Képzéseink</h1>
+        <p class="program-description">
+            A Firestarter Akadémia különféle képzéseket kínál, amelyek célja a személyes és szakmai fejlődés támogatása. Akár életvezetési tanácsadásra, akár üzleti fejlődési iránymutatásra van szükséged, nálunk megtalálhatod a megfelelő programot.
+        </p>
+
+        <div class="training-section">
+            <div class="training-card" data-aos="fade-up" id="life-coaching">
+                <h2 class="training-title">Life Coaching Képzés</h2>
+                <p class="training-info">
+                    Fejleszd önismereted és találj rá a belső erőforrásaidra! Ebben a képzésben segítünk felismerni, hogyan érheted el a legjobbat önmagadból, és támogatunk abban, hogy magabiztosabban lépj az önmegvalósítás útjára.
+                </p>
+                <p class="training-info"><strong>Időtartam:</strong> 6 hét, heti 1 alkalom</p>
+                <p class="training-info"><strong>Kiknek ajánljuk:</strong> azoknak, akik önismereti és életvezetési iránymutatást keresnek</p>
+            </div>
+
+            <div class="training-card" data-aos="fade-up" data-aos-delay="100" id="business-coaching">
+                <h2 class="training-title">Business Coaching Tréning</h2>
+                <p class="training-info">
+                    Fejleszd vállalkozói képességeidet és válj vezetővé a szakmádban! Ez a képzés segít abban, hogy jobb döntéseket hozz, hatékonyabban kommunikálj és felkészültebben építsd a vállalkozásodat.
+                </p>
+                <p class="training-info"><strong>Időtartam:</strong> 8 hét, heti 2 alkalom</p>
+                <p class="training-info"><strong>Kiknek ajánljuk:</strong> vezetőknek és vállalkozóknak, akik fejlődni szeretnének</p>
+            </div>
+
+            <div class="training-card" data-aos="fade-up" data-aos-delay="200" id="workshop">
+                <h2 class="training-title">Stresszkezelés és Reziliencia Workshop</h2>
+                <p class="training-info">
+                    Ismerd meg, hogyan kezelheted hatékonyabban a mindennapi stresszt, és hogyan építheted ki a belső erőforrásaidat, hogy könnyebben alkalmazkodj a kihívásokhoz. Ez a workshop gyakorlati tanácsokkal és technikákkal lát el.
+                </p>
+                <p class="training-info"><strong>Időtartam:</strong> 4 hét, heti 1 alkalom</p>
+                <p class="training-info"><strong>Kiknek ajánljuk:</strong> mindenkinek, aki szeretné jobban kezelni a stresszt</p>
+            </div>
+
+            <div class="training-card" data-aos="fade-up" data-aos-delay="300" id="career">
+                <h2 class="training-title">Karriertervezés és Énmárka Építés</h2>
+                <p class="training-info">
+                    Ez a program segít a személyes és szakmai énmárka kialakításában, valamint karriered tudatos tervezésében. Tanuld meg, hogyan alakíthatsz ki egyedi és erős énmárkát, amely segíti a céljaid elérését.
+                </p>
+                <p class="training-info"><strong>Időtartam:</strong> 6 hét, heti 1 alkalom</p>
+                <p class="training-info"><strong>Kiknek ajánljuk:</strong> azoknak, akik szeretnék tudatosan építeni karrierjüket</p>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+
+
+
+        function toggleTheme() {
+            const body = document.body;
+            const button = document.querySelector('.theme-switch');
+            const modeText = button.querySelector('.mode-text');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                modeText.textContent = '☀️';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                modeText.textContent = '🌙';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+
+        window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            document.querySelector(window.location.hash).classList.add('pulse');
+        }
+            const savedTheme = localStorage.getItem('theme');
+            const button = document.querySelector('.theme-switch');
+            const modeText = button.querySelector('.mode-text');
+            
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                modeText.textContent = '🌙';
+            }
+        });
+
+    </script>
+</body>
+</html>
